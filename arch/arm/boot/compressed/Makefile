@@ -144,6 +144,11 @@ LDFLAGS_vmlinux += -p
 LDFLAGS_vmlinux += --no-undefined
 # Delete all temporary local symbols
 LDFLAGS_vmlinux += -X
+# Fix noexec errors
+LDFLAGS_vmlinux += -z noexecstack
+ifeq ($(CONFIG_LD_IS_BFD),y)
+LDFLAGS_vmlinux += $(call ld-option,--no-warn-rwx-segments)
+endif
 # Next argument is a linker script
 LDFLAGS_vmlinux += -T
 
